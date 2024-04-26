@@ -25,21 +25,21 @@ BEGIN
 		INSERT INTO usuarios(login,password,nombre,sexo,telefono,imagen,email,fechanacimiento,id_perfil)	
 		VALUES('Cajero','Cajero','Cajero','Marculino',NULL,NULL,NULL,NULL,2);
 	END IF;
-	IF NOT EXISTS(select * from menu WHERE codigo='Rol') THEN
+	IF NOT EXISTS(select * from menu WHERE codigo='Roles') THEN
 		INSERT INTO menu(codigo,nombre,padre,ruta,orden)	
-		VALUES('Rol','Rol',NULL,'Rol.php',1);
+		VALUES('Roles','Roles',NULL,'Roles.php',1);
 	END IF;
-	IF NOT EXISTS(select * from menu WHERE codigo='Perfil') THEN
+	IF NOT EXISTS(select * from menu WHERE codigo='Perfiles') THEN
 		INSERT INTO menu(codigo,nombre,padre,ruta,orden)	
-		VALUES('Perfil','Perfil',NULL,'Perfil.php',2);
+		VALUES('Perfiles','Perfiles',NULL,'Perfiles.php',2);
 	END IF;
-	IF NOT EXISTS(select * from menu WHERE codigo='Usuario') THEN
+	IF NOT EXISTS(select * from menu WHERE codigo='Usuarios') THEN
 		INSERT INTO menu(codigo,nombre,padre,ruta,orden)	
-		VALUES('Usuario','Usuario',NULL,'Usuario.php',2);
+		VALUES('Usuarios','Usuarios',NULL,'Usuarios.php',2);
 	END IF;
 	IF NOT EXISTS(select * from menu WHERE codigo='salir') THEN
 		INSERT INTO menu(codigo,nombre,padre,ruta,orden)	
-		VALUES('salir','salir',NULL,'inicio.php',1);
+		VALUES('salir','salir',NULL,'inicio.php',10);
 	END IF;
 	
 END	$$
