@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="../CSS/estilos.css">
+	<link rel="stylesheet" href="../CSS/estilos.css" />
     <title>Maestro de Roles</title>
 </head>
 <body>
@@ -18,6 +18,7 @@
 			   $id=$_GET["id"];
 			   $codigo=$_GET["codigo"];
 			   $nombre=$_GET["nombre"];
+			   $inactivo=$_GET["inactivo"];
 		   }
 	?>	   
     <!--<h2>Insertar Rol</h2>-->
@@ -25,8 +26,10 @@
         <input type="hidden" name="id" placeholder="Id del rol" value="<?php echo $id ?>">
 		<input type="text" name="codigo" placeholder="Codigo del rol" value="<?php echo $codigo ?>" required>
 		<input type="text" name="nombre" placeholder="Nombre del rol" value="<?php echo $nombre ?>" required>
+		<input type="checkbox" id="inactivo" name="inactivo" placeholder="Inactivo del Rol" value="<?php echo $inactivo ?>" <?php echo ($inactivo ? 'checked' : ''); ?>> 
         <input type="submit" name="Guardar" value="Guardar"/>
 		<input type="reset"  name="Cancelar" value="Cancelar"/>
+		
     </form>
 
     
@@ -34,7 +37,8 @@
        <?php
 		   // Incluye el archivo de funciones y llama a la función para consultar el menú-->
 		   include 'PeticionSQL.php';
-	
+			ini_set('display_errors', 1);
+			error_reporting(E_ALL);
 		   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			   $id = $_POST["id"];
 			   if(empty($id)){
@@ -50,5 +54,16 @@
 		   
        ?>
     </div>
+	<script>
+		//var checkboxinactivo = document.getElementById('inactivo');
+		//checkboxinactivo.addEventListener('click', function() {
+		//	if(this.checked) {
+		//	  this.value=1;
+		//	} else {
+		//	  this.value=0;
+		//	}
+		//	//return true;
+		//});
+	</script>
 </body>
 </html>
