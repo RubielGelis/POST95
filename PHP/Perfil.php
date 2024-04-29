@@ -32,7 +32,7 @@
 		<input type="hidden" name="id_rol" placeholder="Id del rol" value="<?php echo $id_rol ?>">
 		<input type="hidden" name="codigo_rol" placeholder="Codigo del rol" value="<?php echo $codigo_rol ?>">
 		<input type="text" name="Rol" placeholder="Nombre del rol" value="<?php echo $nombre_rol ?>">
-		<input type="checkbox" name="inactivo" placeholder="Inactivo del Perfil" <?php echo ($inactivo ? 'checked' : ''); ?>> 
+		<input type="checkbox" id="inactivo" name="inactivo" placeholder="Inactivo del Perfil" value="<?php echo $inactivo ?>" <?php echo ($inactivo ? 'checked' : ''); ?>> 
         <input type="submit" name="Guardar" value="Guardar"/>
 		<input type="reset"  name="Cancelar" value="Cancelar"/>
     </form>
@@ -57,6 +57,16 @@
 		   }
 		   
        ?>
+	   <script>
+		var cinactivo = document.getElementById('inactivo');
+		cinactivo.addEventListener('click', function() {
+			if(cinactivo.checked) {
+			  cinactivo.value=1;
+			} else {
+			  cinactivo.value=0;
+			}
+		});
+	</script>
     </div>
 </body>
 </html>

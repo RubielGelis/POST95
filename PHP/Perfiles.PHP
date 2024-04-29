@@ -13,7 +13,8 @@
 		<h2>Crear Perfil</h2>
 		<form method="get" action="Rol.php">
 			<!--<input type="text" name="nombre" placeholder="Nombre del rol" required>-->
-			<input type="button" name="Crear" value="Crear Perfil" onclick=" window.location = 'principal.php?url=' + encodeURIComponent('Perfil.php?id=&codigo=&nombre=&id_rol=&codigo_rol=&nombre_rol=&inactivo=0')" />
+			<!--<input type="button" name="Crear" value="Crear Perfil" onclick=" window.location = 'principal.php?url=' + encodeURIComponent('Perfil.php?id=&codigo=&nombre=&id_rol=&codigo_rol=&nombre_rol=&inactivo=0')" />
+			<input type="button" name="Crear" value="Crear Perfil" onclick=" window.location.href = 'Perfil.php?id=&codigo=&nombre=&id_rol=&codigo_rol=&nombre_rol=&inactivo=0';" />
 		</form>
 	</div>
     

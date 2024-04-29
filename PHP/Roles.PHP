@@ -13,7 +13,10 @@
 		<h2>Crear Rol</h2>
 		<form method="get" action="Rol.php">
 			<!--<input type="text" name="nombre" placeholder="Nombre del rol" required>-->
-			<input type="button" name="Crear" value="Crear Rol" onclick=" window.location = 'principal.php?url=' + encodeURIComponent('Rol.php?id=&codigo=&nombre=&inactivo=0')" />
+			<!--<input type="button" name="Crear" value="Crear Rol" onclick=" window.location = 'principal.php?url=' + encodeURIComponent('Rol.php?id=&codigo=&nombre=&inactivo=0')" />-->
+			<!--<input type="button" name="Crear" value="Crear Rol" onclick=" window.location.href = 'Rol.php?id=&codigo=&nombre=&inactivo=0';" />-->
+			<!--<input type="button" name="Crear" value="Crear Rol" onclick=" cargarPagina2('Rol.php?id=&codigo=&nombre=&inactivo=0','dcontenido');">-->
+			<input type="button" name="Crear" value="Crear Rol" onclick=" cargarContenido('Rol.php?id=&codigo=&nombre=&inactivo=0');">			
 		</form>
 	</div>
     
@@ -27,6 +30,5 @@
 			?>
 		</form>	
     </div>
-	
 </body>
 </html>
