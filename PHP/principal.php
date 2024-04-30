@@ -93,9 +93,9 @@
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState === XMLHttpRequest.DONE) {
 						if (xhr.status === 200) {
-							alert('Se guardaron los datos del rol correctamente.');
+							var response = xhr.responseText;
+							alert(response);
 							cargarContenido(url);
-							//cargarPagina(url, "dcontenido"); // Cargar contenido después de guardar
 						} else {
 							alert('Error al guardar los datos del rol.');
 						}
@@ -106,16 +106,18 @@
 			}
 		}
 
+		
 		function EliminarRol(id, url) {
 			if (confirm("¿Estás seguro de que deseas eliminar este rol?")) {
 				var xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState === XMLHttpRequest.DONE) {
 						if (xhr.status === 200) {
-							alert('El Rol eliminado correctamente.');
-							cargarContenido(url); // Cargar contenido después de eliminar
+							var response = xhr.responseText;
+							alert(response);
+							cargarContenido(url);
 						} else {
-							alert('Error al eliminar el rol.');
+							alert('Error al comunicarse con el servidor.');
 						}
 					}
 				};

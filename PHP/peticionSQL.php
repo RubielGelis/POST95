@@ -115,7 +115,8 @@ function consultarPerfil() {
 		$urlEnviar = "Perfil.php?id=".$row['id']."&codigo=".$row['codigo']."&nombre=".$row['nombre']."&id_rol=".$row['id_rol']."&codigo_rol=".$row['codigo_rol']."&nombre_rol=".$row['nombre_rol']."&inactivo=".$row['inactivo'];
 		$urlCodificada = urlencode($urlEnviar);
 		//$perfil_html .= "<td><a href='principal.php?url=". $urlCodificada ."'>Consultar</a></td>"; // Enlace para consultar
-		$perfil_html .= "<td><a href='". $urlEnviar ."'>Consultar</a></td>"; // Enlace para consultar		
+		//$perfil_html .= "<td><a href='". $urlEnviar ."'>Consultar</a></td>"; // Enlace para consultar
+		$perfil_html .= "<td><a href='#' onclick=\"cargarContenido('". $urlEnviar ."');\")>Consultar</a></td>"; // Enlace para consultar		
 		$perfil_html .= "<td><a href='#' onclick=\"EliminarPerfil(".$row['id'].",'".$url."');\">Eliminar</a></td>";
 		$perfil_html .= '</tr>';
 	}
@@ -243,21 +244,26 @@ function GuardarRol($id,$codigo,$nombre,$inactivo,$url) {
 }
 function EliminarRol($id,$url){
 	global $db;
-	$resultado_html="<script>alert('Error al eliminar el rol.');</script>";
+	$response = array();
+	$resultado_html="";
 	
 	$query = "DELETE FROM Rol WHERE id='$id'";
 	
     $result = pg_query($db, $query);
 	// Verificar si la eliminacion fue exitosa
 	if ($result) {
-		$resultado_html = "<script>alert('Rol Eliminado correctamente.'); window.location.href='" .$url. "';</script>";
-		//$resultado_html = "<script>alert('Rol Eliminado correctamente.');</script>";
-	} else {
-		$resultado_html = "<script>alert('Error al eliminar el rol.'); window.location.href='" .$url. "';</script>";
-		//$resultado_html="<script>alert('Error al eliminar el rol.');</script>";
-	}
-
-	return $resultado_html;
+        // La eliminación fue exitosa
+        $response['success'] = true;
+        $response['message'] = "Rol eliminado correctamente.";
+		//$resultado_html = json_encode($response);
+    } else {
+        // Hubo un error al eliminar el rol
+        $response['success'] = false;
+        $response['error'] = pg_last_error($db);
+		//$resultado_html = json_encode($response);
+    }
+	//return $resultado_html;
+	return json_encode($response);
 }
 function InsertarPerfil() {
     global $db;
@@ -315,8 +321,30 @@ function ModificarPerfil() {
 	}
 	return $resultado_html;
 }
+function GuardarPerfil($id,$codigo,$nombre,$id_rol,$inactivo,$url) {
+    global $db;
+	$resultado_html='';
+	
+	// Insertar rol en la base de datos
+	if(empty($id)){
+		$query = "INSERT INTO Perfil (codigo,nombre,id_rol,inactivo) VALUES ('$codigo','$nombre','$id_rol','$inactivo')";
+	}else{
+		$query = "UPDATE Perfil SET codigo='$codigo',nombre='$nombre',id_rol='$id_rol',inactivo='$inactivo' WHERE id='$id'";
+	}
+	$result = pg_query($db, $query);
+	
+	// Verificar si la inserción fue exitosa
+	if ($result) {
+		$resultado_html = "<script>alert('". $result ."'); cargarPagina('" .$url. "','dcontenido');</script>";
+	} else {
+		$resultado_html = "<script>alert('". $result ."'); cargarPagina('" .$url. "','dcontenido');</script>";
+	}
+	// Cerrar conexión a la base de datos
+	return $resultado_html;
+}
 function EliminarPerfil($id,$url){
 	global $db;
+	$response = array();
 	$resultado_html="<script>alert('Error al eliminar el Perfil.');</script>";
 	
 	$query = "DELETE FROM Perfil WHERE id='$id'";
@@ -327,7 +355,9 @@ function EliminarPerfil($id,$url){
 		$resultado_html = "<script>alert('Perfil Eliminado correctamente.'); cargarPagina('" .$url. "','dcontenido');</script>";
 	} else {
 		//$resultado_html = "<script>alert('Error al eliminar el Perfil.'); window.location.href='" .$url. "';</script>";
-		$resultado_html = "<script>alert('Error al eliminar el Perfil.'); cargarPagina('" .$url. "','dcontenido');</script>";
+		//$resultado_html = "<script>alert('Error al eliminar el Perfil.'); cargarPagina('" .$url. "','dcontenido');</script>";
+		$response['error'] = pg_last_error($db);
+		$resultado_html = json_encode($response);
 	}
 
 	return $resultado_html;
@@ -344,8 +374,19 @@ if(isset($_GET['GuardarRol'])) {
 if(isset($_GET['EliminarRol'])) {
     $id = $_GET['id'];
 	$url = $_GET['url'];
-	echo "id ".$id. ", url ". $url; 
+	//echo "id ".$id. ", url ". $url; 
     $resultado_html = EliminarRol($id,$url);
+	echo $resultado_html;
+}
+
+if(isset($_GET['GuardarPerfil'])) {
+    $id = $_GET['id'];
+	$codigo = $_GET['codigo'];
+	$nombre = $_GET['nombre'];
+	$id_rol = $_GET['id_rol'];
+	$inactivo = $_GET['inactivo'];
+	$url = $_GET['url'];
+    $resultado_html = GuardarPerfil($id,$codigo,$nombre,$id_rol,$inactivo,$url);
 	echo $resultado_html;
 }
 if(isset($_GET['EliminarPerfil'])) {
